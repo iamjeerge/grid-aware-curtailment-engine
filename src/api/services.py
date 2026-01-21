@@ -26,11 +26,9 @@ from src.api.schemas import (
     StrategyResultResponse,
     StrategyType,
 )
-from src.battery.physics import BatteryModel
 from src.controllers.naive import NaiveController
 from src.domain.models import (
     BatteryConfig,
-    BatteryState,
     ForecastScenario,
     GenerationForecast,
     GridConstraint,
@@ -156,17 +154,16 @@ class OptimizationService:
         start = time.time()
 
         controller = NaiveController(battery_config)
-        battery = BatteryModel(battery_config)
 
         analyzer_config = AnalyzerConfig(battery_config=battery_config)
         analyzer = PerformanceAnalyzer(analyzer_config)
 
         decisions: list[OptimizationDecision] = []
-        state = BatteryState(
-            soc_mwh=battery_config.capacity_mwh * 0.5,
-            capacity_mwh=battery_config.capacity_mwh,
-            max_charge_mw=battery_config.max_power_mw,
-            max_discharge_mw=battery_config.max_power_mw,
+        
+        # Initialize the controller
+        controller.initialize(
+            start_time=forecasts[0].timestamp,
+            initial_soc_fraction=0.5,
         )
 
         for forecast, price, constraint in zip(
@@ -174,13 +171,12 @@ class OptimizationService:
         ):
             decision = controller.dispatch(
                 timestamp=forecast.timestamp,
-                generation_mw=forecast.p50_mw,
+                generation_mw=forecast.total_generation(ForecastScenario.P50),
                 grid_constraint=constraint,
                 market_price=price,
                 scenario=ForecastScenario.P50,
             )
             decisions.append(decision)
-            state = battery.apply_decision(state, decision)
 
         summary = analyzer.analyze_decisions(
             decisions=decisions,
@@ -221,7 +217,11 @@ class OptimizationService:
             market_prices=prices,
         )
 
-        decisions = optimizer.get_decisions(result, ForecastScenario.P50)
+        sim_result = optimizer.get_simulation_result(
+            forecasts=forecasts,
+            scenario=ForecastScenario.P50,
+        )
+        decisions = sim_result.decisions
 
         summary = analyzer.analyze_decisions(
             decisions=decisions,
@@ -248,17 +248,17 @@ class OptimizationService:
                 curtailment_rate=summary.curtailment.curtailment_rate,
             ),
             revenue=RevenueMetricsResponse(
-                gross_revenue=summary.revenue.gross_revenue,
+                gross_revenue=summary.revenue.total_revenue,
                 degradation_cost=summary.revenue.degradation_cost,
                 net_profit=summary.revenue.net_profit,
-                average_price=summary.revenue.average_price,
+                average_price=summary.revenue.average_price_captured,
             ),
             battery=BatteryMetricsResponse(
                 total_charged_mwh=summary.battery.total_charged_mwh,
                 total_discharged_mwh=summary.battery.total_discharged_mwh,
-                cycles=summary.battery.cycles,
+                cycles=summary.battery.total_cycles,
                 utilization_rate=summary.battery.utilization_rate,
-                avg_soc=summary.battery.avg_soc,
+                avg_soc=summary.battery.average_soc,
             ),
             grid_compliance=GridComplianceResponse(
                 violation_count=summary.grid_compliance.violation_count,

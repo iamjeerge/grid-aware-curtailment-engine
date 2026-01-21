@@ -14,6 +14,7 @@ from src.api.schemas import (
     OptimizationResultResponse,
     ScenarioConfigRequest,
     ScenarioType,
+    StrategyType,
 )
 from src.api.services import optimization_service
 
@@ -159,11 +160,12 @@ async def run_demo_scenario(scenario_id: str) -> OptimizationResultResponse:
         raise HTTPException(status_code=404, detail="Demo scenario not found")
 
     try:
+        # Run only naive strategy for now (MILP has validation issues)
         result = optimization_service.run_optimization(
             name=f"Demo: {scenario.name}",
             scenario_config=scenario.config,
             battery_config=scenario.battery,
-            strategies=["naive", "milp"],
+            strategies=[StrategyType.NAIVE],
         )
         return result
     except Exception as e:
