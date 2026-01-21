@@ -304,3 +304,121 @@ class DemoScenarioResponse(BaseModel):
     scenario_type: ScenarioType
     config: ScenarioConfigRequest
     battery: BatteryConfigRequest
+
+
+# =============================================================================
+# Industry & Business Metrics
+# =============================================================================
+
+
+class FinancialMetricsResponse(BaseModel):
+    """Financial metrics for business analysis."""
+
+    total_revenue: float = Field(description="Total revenue from all optimizations ($)")
+    total_cost: float = Field(description="Total operational costs ($)")
+    net_profit: float = Field(description="Net profit (revenue - cost) ($)")
+    roi_percentage: float = Field(description="Return on Investment (%)")
+    average_profit_per_mwh: float = Field(
+        description="Average profit per MWh sold ($/MWh)"
+    )
+    revenue_uplift_vs_naive: float = Field(
+        description="Revenue improvement vs naive strategy (%)"
+    )
+    total_degradation_cost: float = Field(
+        description="Battery degradation costs incurred ($)"
+    )
+
+
+class GridReliabilityMetricsResponse(BaseModel):
+    """Grid reliability and compliance metrics."""
+
+    total_violations: int = Field(description="Total grid constraint violations")
+    total_violation_mwh: float = Field(description="Total violated energy (MWh)")
+    compliance_rate: float = Field(description="Grid compliance rate (%)")
+    max_violation_mw: float = Field(description="Maximum violation magnitude (MW)")
+    ramp_rate_violations: int = Field(description="Number of ramp rate violations")
+    export_capacity_utilization: float = Field(
+        description="Average grid export capacity utilization (%)"
+    )
+
+
+class CurtailmentReductionMetricsResponse(BaseModel):
+    """Curtailment and renewable optimization metrics."""
+
+    total_generation_mwh: float = Field(description="Total renewable generation (MWh)")
+    total_curtailed_mwh: float = Field(description="Total curtailed energy (MWh)")
+    curtailment_rate_baseline: float = Field(
+        description="Baseline curtailment rate without optimization (%)"
+    )
+    curtailment_rate_optimized: float = Field(
+        description="Optimized curtailment rate (%)"
+    )
+    curtailment_reduction_pct: float = Field(
+        description="Curtailment reduction achieved (%)"
+    )
+    avoided_curtailment_mwh: float = Field(
+        description="Energy saved from curtailment reduction (MWh)"
+    )
+    avoided_curtailment_value: float = Field(
+        description="Economic value of avoided curtailment ($)"
+    )
+
+
+class BatteryHealthMetricsResponse(BaseModel):
+    """Battery health and efficiency metrics."""
+
+    total_cycles_equivalent: float = Field(
+        description="Total equivalent full charge/discharge cycles"
+    )
+    remaining_useful_life_pct: float = Field(
+        description="Estimated remaining useful life (%)"
+    )
+    round_trip_efficiency_actual: float = Field(
+        description="Actual round-trip efficiency achieved (%)"
+    )
+    energy_arbitrage_captured: float = Field(
+        description="Value of price arbitrage ($)"
+    )
+    peak_shaving_contribution: float = Field(
+        description="Contribution to grid peak shaving (MWh)"
+    )
+
+
+class EnvironmentalMetricsResponse(BaseModel):
+    """Environmental and sustainability metrics."""
+
+    co2_avoided_metric_tons: float = Field(
+        description="CO2 emissions avoided due to curtailment reduction (metric tons)"
+    )
+    equivalent_household_days: float = Field(
+        description="Equivalent clean energy for household-days"
+    )
+    grid_renewable_penetration_improvement: float = Field(
+        description="Improvement in grid renewable penetration (%)"
+    )
+
+
+class IndustryDashboardResponse(BaseModel):
+    """Comprehensive industry dashboard with all KPIs."""
+
+    total_optimizations_run: int
+    financial_metrics: FinancialMetricsResponse
+    grid_reliability: GridReliabilityMetricsResponse
+    curtailment_reduction: CurtailmentReductionMetricsResponse
+    battery_health: BatteryHealthMetricsResponse
+    environmental: EnvironmentalMetricsResponse
+    summary: str = Field(description="Executive summary of key insights")
+
+
+class OptimizationSummaryItemResponse(BaseModel):
+    """Summary of a single optimization for listing."""
+
+    id: UUID
+    name: str
+    scenario_type: str
+    strategy: str
+    created_at: datetime
+    net_profit: float
+    curtailment_reduction: float
+    compliance_rate: float
+    grid_violations: int

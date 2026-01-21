@@ -9,9 +9,11 @@ from fastapi import APIRouter, HTTPException, Query
 from src.api.schemas import (
     BatteryConfigRequest,
     DemoScenarioResponse,
+    IndustryDashboardResponse,
     OptimizationListResponse,
     OptimizationRequest,
     OptimizationResultResponse,
+    OptimizationSummaryItemResponse,
     ScenarioConfigRequest,
     ScenarioType,
     StrategyType,
@@ -55,6 +57,45 @@ async def list_optimizations(
         page=page,
         page_size=page_size,
     )
+
+
+@router.get("/summary/list", response_model=list[OptimizationSummaryItemResponse])
+async def list_optimization_summaries(
+    scenario: str | None = Query(None, description="Filter by scenario type"),
+    page: int = Query(default=1, ge=1, description="Page number"),
+    page_size: int = Query(default=20, ge=1, le=100, description="Items per page"),
+) -> list[OptimizationSummaryItemResponse]:
+    """Get quick summary of all optimizations for listing view.
+    
+    Useful for dashboards and rapid business intelligence lookup.
+    """
+    summaries, _ = optimization_service.get_optimization_summary_list(
+        scenario_filter=scenario,
+        page=page,
+        page_size=page_size,
+    )
+    return summaries
+
+
+@router.get("/stats/industry", response_model=IndustryDashboardResponse)
+async def get_industry_stats() -> IndustryDashboardResponse:
+    """Get comprehensive industry metrics dashboard.
+    
+    Returns aggregated KPIs across all optimizations:
+    - Financial: Revenue, profit, ROI, cost metrics
+    - Grid Reliability: Compliance, violations, export utilization
+    - Curtailment: Reduction percentages, avoided energy value
+    - Battery Health: Cycles, efficiency, remaining life
+    - Environmental: CO2 avoided, grid renewable penetration
+    
+    **Industry Use Cases:**
+    - Grid operators: Monitor compliance and violation trends
+    - Power plant operators: Track revenue and degradation costs
+    - Finance teams: Analyze ROI and cost-benefit
+    - Environmental teams: Report CO2 avoidance and sustainability impact
+    - Traders: Understand arbitrage opportunities and market impact
+    """
+    return optimization_service.get_industry_dashboard()
 
 
 @router.get("/{optimization_id}", response_model=OptimizationResultResponse)
