@@ -234,13 +234,17 @@ Generate:
 
 
 🟢 PHASE 13: Convert everything to web tool 
+
 Task 13.1 – Web Application Wrapper
 Wrap the entire engine into a web application using FastAPI.
+
 Task 13.2 – User Interface
 Create a beautiful UI using ReactJS and typescript to allow users to input scenarios and view results.
+
 Task 13.3 – Demo Data 
 Add fixtures and store data in postgres to allow users to quickly demo the application.
+
 Task 13.4 – Deployment
-Deploy the web application using Docker.
+Deploy the web application using Docker & docker-compose.
 
 
