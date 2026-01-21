@@ -13,7 +13,7 @@
 **Production-grade optimization system that minimizes renewable energy curtailment and maximizes revenue by jointly optimizing generation dispatch, grid constraints, battery storage, and market prices under uncertainty.**
 
 <p align="center">
-  <img src="docs/images/duck_curve_solution.png" alt="Duck Curve Solution" width="800"/>
+  <img src="solutions.png" alt="Duck Curve Solution" width="800"/>
 </p>
 
 ---
