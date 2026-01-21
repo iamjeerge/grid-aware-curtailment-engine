@@ -709,7 +709,7 @@ Contributions are welcome! Please:
 
 ---
 
-## 📄 Screenshot
+##  Screenshot
 
 <p align="center">
   <img src="./screenshot.png" alt="screenshot" width="800"/>
