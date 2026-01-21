@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Custom styles for the Grid-Aware Curtailment Engine */
+
+/* Form input styling */
+input[type="number"],
+input[type="text"] {
+  @apply px-3 py-2 border rounded-md;
+}
+
+/* Smooth transitions */
+button,
+a {
+  @apply transition-all duration-200;
+}
+
+/* Chart tooltip styling */
+.recharts-tooltip-wrapper {
+  @apply bg-white shadow-lg rounded-lg;
+}
