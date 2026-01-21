@@ -709,6 +709,14 @@ Contributions are welcome! Please:
 
 ---
 
+## 📄 Screenshot
+
+<p align="center">
+  <img src="./screenshot.png" alt="screenshot" width="800"/>
+</p>
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

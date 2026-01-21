@@ -42,15 +42,15 @@ function ScenarioCard({
   const gradient = colors[scenario.scenario_type] || 'from-gray-400 to-gray-500';
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-grid-panel border border-grid-border rounded-lg shadow-panel overflow-hidden">
       <div className={`bg-gradient-to-r ${gradient} p-4`}>
         <Icon className="w-10 h-10 text-white" />
       </div>
       <div className="p-6">
-        <h3 className="text-lg font-semibold text-gray-900">{scenario.name}</h3>
-        <p className="text-sm text-gray-500 mt-2">{scenario.description}</p>
+        <h3 className="text-lg font-semibold text-grid-text">{scenario.name}</h3>
+        <p className="text-sm text-grid-muted mt-2">{scenario.description}</p>
         
-        <div className="mt-4 space-y-2 text-sm text-gray-600">
+        <div className="mt-4 space-y-2 text-sm text-grid-muted">
           <div className="flex justify-between">
             <span>Horizon</span>
             <span className="font-medium">{scenario.config.horizon_hours} hours</span>
@@ -76,7 +76,7 @@ function ScenarioCard({
           disabled={isLoading}
           className={`mt-6 w-full py-2 px-4 rounded-lg flex items-center justify-center
             ${isLoading 
-              ? 'bg-gray-300 cursor-not-allowed' 
+              ? 'bg-gradient-to-r from-gray-500 to-gray-600 cursor-not-allowed opacity-60' 
               : `bg-gradient-to-r ${gradient} hover:opacity-90`
             } text-white font-medium transition-opacity`}
         >
@@ -141,27 +141,27 @@ function CustomScenarioForm({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-grid-panel border border-grid-border rounded-lg shadow-panel p-6">
       <div className="flex items-center mb-4">
-        <Settings className="w-6 h-6 text-gray-600 mr-2" />
-        <h3 className="text-lg font-semibold text-gray-900">Custom Scenario</h3>
+        <Settings className="w-6 h-6 text-energy-orange mr-2" />
+        <h3 className="text-lg font-semibold text-grid-text">Custom Scenario</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <label className="block text-sm font-medium text-grid-text">Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm
-              focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full bg-grid-dark border border-grid-border rounded-md text-grid-text
+              focus:border-energy-orange focus:ring-1 focus:ring-energy-orange focus:outline-none px-3 py-2"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-grid-text">
               Horizon (hours)
             </label>
             <input
@@ -170,12 +170,12 @@ function CustomScenarioForm({
               max={168}
               value={horizonHours}
               onChange={(e) => setHorizonHours(Number(e.target.value))}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm
-                focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 block w-full bg-grid-dark border border-grid-border rounded-md text-grid-text
+                focus:border-energy-orange focus:ring-1 focus:ring-energy-orange focus:outline-none px-3 py-2"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-grid-text">
               Peak Generation (MW)
             </label>
             <input
@@ -184,15 +184,15 @@ function CustomScenarioForm({
               max={10000}
               value={peakGen}
               onChange={(e) => setPeakGen(Number(e.target.value))}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm
-                focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 block w-full bg-grid-dark border border-grid-border rounded-md text-grid-text
+                focus:border-energy-orange focus:ring-1 focus:ring-energy-orange focus:outline-none px-3 py-2"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-grid-text">
               Grid Limit (MW)
             </label>
             <input
@@ -201,12 +201,12 @@ function CustomScenarioForm({
               max={10000}
               value={gridLimit}
               onChange={(e) => setGridLimit(Number(e.target.value))}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm
-                focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 block w-full bg-grid-dark border border-grid-border rounded-md text-grid-text
+                focus:border-energy-orange focus:ring-1 focus:ring-energy-orange focus:outline-none px-3 py-2"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-grid-text">
               Battery Capacity (MWh)
             </label>
             <input
@@ -215,14 +215,14 @@ function CustomScenarioForm({
               max={10000}
               value={batteryMwh}
               onChange={(e) => setBatteryMwh(Number(e.target.value))}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm
-                focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 block w-full bg-grid-dark border border-grid-border rounded-md text-grid-text
+                focus:border-energy-orange focus:ring-1 focus:ring-energy-orange focus:outline-none px-3 py-2"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-grid-text">
             Battery Power (MW)
           </label>
           <input
@@ -231,8 +231,8 @@ function CustomScenarioForm({
             max={5000}
             value={batteryMw}
             onChange={(e) => setBatteryMw(Number(e.target.value))}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm
-              focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full bg-grid-dark border border-grid-border rounded-md text-grid-text
+              focus:border-energy-orange focus:ring-1 focus:ring-energy-orange focus:outline-none px-3 py-2"
           />
         </div>
 
@@ -241,9 +241,9 @@ function CustomScenarioForm({
           disabled={isLoading}
           className={`w-full py-2 px-4 rounded-lg flex items-center justify-center
             ${isLoading
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700'
-            } text-white font-medium`}
+              ? 'bg-energy-orange/40 cursor-not-allowed opacity-60'
+              : 'bg-energy-orange hover:bg-energy-orangeSoft'
+            } text-white font-medium transition-colors`}
         >
           {isLoading ? (
             <>
@@ -271,7 +271,7 @@ export default function ScenarioSelector({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+        <h2 className="text-xl font-semibold text-grid-text mb-4">
           Pre-configured Scenarios
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -286,8 +286,8 @@ export default function ScenarioSelector({
         </div>
       </div>
 
-      <div className="border-t pt-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="border-t border-grid-border pt-6">
+        <h2 className="text-xl font-semibold text-grid-text mb-4">
           Custom Configuration
         </h2>
         <div className="max-w-md">

@@ -97,18 +97,18 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-grid-gradient">
       <Header isApiConnected={isApiConnected} />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {!isApiConnected ? (
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+          <div className="bg-yellow-900/20 border-l-4 border-yellow-600 p-4 rounded">
             <div className="flex">
               <div className="ml-3">
-                <p className="text-sm text-yellow-700">
+                <p className="text-sm text-yellow-400">
                   <strong>API not connected.</strong> Please start the backend server:
                 </p>
-                <pre className="mt-2 text-xs bg-yellow-100 p-2 rounded">
+                <pre className="mt-2 text-xs bg-yellow-900/40 text-yellow-300 p-2 rounded">
                   cd grid-aware-curtailment-engine{'\n'}
                   poetry run uvicorn src.api.main:app --reload
                 </pre>
@@ -119,7 +119,7 @@ function AppContent() {
           <div>
             <button
               onClick={handleBack}
-              className="mb-6 flex items-center text-blue-600 hover:text-blue-800"
+              className="mb-6 flex items-center text-energy-orange hover:text-energy-orangeSoft transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back to Scenarios
@@ -128,7 +128,7 @@ function AppContent() {
           </div>
         ) : scenariosLoading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-energy-orange" />
           </div>
         ) : (
           <ScenarioSelector
@@ -141,15 +141,15 @@ function AppContent() {
 
         {/* Error display */}
         {(runDemoMutation.error || runCustomMutation.error) && (
-          <div className="mt-4 bg-red-50 border-l-4 border-red-400 p-4 rounded">
-            <p className="text-sm text-red-700">
+          <div className="mt-4 bg-danger/10 border-l-4 border-danger p-4 rounded">
+            <p className="text-sm text-danger">
               Error: {(runDemoMutation.error || runCustomMutation.error)?.message || 'Unknown error'}
             </p>
           </div>
         )}
       </main>
 
-      <footer className="bg-gray-800 text-gray-400 py-4 mt-auto">
+      <footer className="bg-grid-dark border-t border-grid-border text-grid-muted py-4 mt-auto">
         <div className="max-w-7xl mx-auto px-4 text-center text-sm">
           Grid-Aware Curtailment Engine &copy; 2025 • Production-grade renewable energy optimization
         </div>

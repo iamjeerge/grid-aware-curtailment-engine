@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  --color-energy-orange: #F59E0B;
+  --color-energy-orange-soft: #FBBF24;
+  --color-grid-dark: #1F1F1F;
+  --color-grid-panel: #2A2A2A;
+  --color-grid-border: #3A3A3A;
+  --color-grid-muted: #9CA3AF;
+  --color-grid-text: #E5E7EB;
+  --color-success: #22C55E;
+  --color-danger: #EF4444;
+  
+  --font-sans: Inter, ui-sans-serif, system-ui;
+  --font-mono: JetBrains Mono, ui-monospace;
+  
+  --shadow-panel: 0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-glow: 0 0 20px rgba(245,158,11,0.25);
+  
+  --bg-grid-gradient: linear-gradient(180deg, #1F1F1F 0%, #161616 100%);
+}
+
 /* Custom styles for the Grid-Aware Curtailment Engine */
 
 /* Form input styling */
