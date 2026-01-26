@@ -630,7 +630,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) for deta
 
 For questions, feature requests, or bug reports:
 
-- 📧 **Email**: support@curtailment-engine.dev
+- 📧 **Email**: gururaj@zeitview.com
 - 🐛 **GitHub Issues**: [Report a bug](https://github.com/iamjeerge/grid-aware-curtailment-engine/issues)
 - 💬 **Discussions**: [Ask a question](https://github.com/iamjeerge/grid-aware-curtailment-engine/discussions)
 
